@@ -35,5 +35,22 @@ router.delete('/:id', (req, res) => {
         res.status(500).json({error: 'error deleting actions'})
     })
 });
+router.put('/:id', (req, res) => {
+    console.log('updating actions')
+    const { id } = req.params;
+    const { project_id, description, notes, completed  } = req.body;
+    User.update(id, { project_id, description, notes, completed })
+    .then(updated => {
+        // if(updated){
+            // User.update(id, {name})
+            // .then(user => {
+                res.status(200).json(updated);
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(500).json({error: 'error updatig actions'})
+            })
+        })
+
 
 module.exports= router;

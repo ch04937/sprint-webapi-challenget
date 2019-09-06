@@ -28,25 +28,20 @@ router.get('/:id', (req, res) => {
 router.put('/:id', (req, res) => {
     console.log('updating project')
     const { id } = req.params;
-    const { name } = req.body;
-    User.update(id, { name })
+    const { name, description } = req.body;
+    User.update(id, { name, description })
     .then(updated => {
-        if(updated){
-            User.getById(id)
-            .then(user => {
-                res.status(200).json(user);
+        // if(updated){
+            // User.update(id, {name})
+            // .then(user => {
+                res.status(200).json(updated);
             })
             .catch(err => {
                 console.log(err);
                 res.status(500).json({error: 'error updatig project'})
             })
-        }
-    })
-    .catch(err => {
-        console.log(err);
-        res.status(500).json({error: 'error updating project'})
-    })
-})
+        })
+
 router.post('/', (req, res) => {
     const project = req.body;
     User.insert(project)
